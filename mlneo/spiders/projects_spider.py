@@ -28,8 +28,4 @@ class ProjectsSpider(scrapy.Spider):
             f.write(response.body)
         self.log('Saved file %s' % filename)
 
-    #custom_settings = {
-        #"DOWNLOAD_DELAY": 1,
-        #"CONCURRENT_REQUESTS_PER_DOMAIN": 2
-    #}
 
