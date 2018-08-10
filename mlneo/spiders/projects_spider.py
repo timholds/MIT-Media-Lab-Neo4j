@@ -10,7 +10,6 @@ class ProjectsSpider(scrapy.Spider):
             ]
 
             for url in urls:
-                print(url)
                 yield scrapy.Request(url=url, callback=self.parse)
 
 
