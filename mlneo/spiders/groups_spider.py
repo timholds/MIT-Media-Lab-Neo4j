@@ -1,4 +1,5 @@
 import scrapy
+import re
 
 class GroupSpider(scrapy.Spider):
     name = "groups"
@@ -20,34 +21,48 @@ class GroupSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        # We want to get the group name from the page with all the group names
-        for group in response.css('.module-title::text').extract():
+        group_pages = response.xpath('//div/@data-href').extract()
 
-            yield {
-                'group': group
-            }
+        if group_pages is not None:
 
-            group_pages = response.xpath('//div/@data-href').extract()
-            print(group)
-            print(group_pages)
-'''
-            if group_pages is not None:
-                for group_page in group_pages:
-                    group_page = response.urljoin(group_page)
-                    print(group_page)
-                    yield scrapy.Request(group_page, callback=self.parse_group(group))
-'''
-'''
-    def parse_group(self, response, group):
+            selector = 'groups.*overview'
 
-        # For each group's page, we want info on their people, projects, and research fields
+            for group_page in group_pages:
+
+                group_name_long = re.search(selector, group_page).group(0)
+                group_name = group_name_long[7:-9]
+                print('Group is ' + group_name)
+
+                group_page = response.urljoin(group_page)
+                print('The group page is' + str(group_page))
+                yield scrapy.Request(group_page, callback=self.parse_group, meta={'group': group_name})
+
+
+    def parse_group(self, response):
+
+        # For each group's page, we want info on their status, people, projects, and research topics
+
+        # Find if the words "was active" are here to see if the project is archived
+        archived_data = response.css('.variant-archived::text').extract()
+        print(str(archived_data))
+        selector = 'was\sactive'
+
+        #people_links = response.xpath('//div/@data-href').extract()
+        #projects_links = response.xpath('//div/@data-href').extract()
+
+        if bool(re.search(selector, str(archived_data))) is True:
+            active = False
+        else:
+            active = True
+
         yield {
-            'group': group,
-            'people' : response.css(''),
-            'projects' : response.css(''),
+            'group': response.meta['group'],
+            #'people' : response.css(''),
+            #'projects' : response.css(''),
+            'active' : active,
             'topics' : response.css('a::text').re('^#.*')
         }
-'''
+
 
 
 
