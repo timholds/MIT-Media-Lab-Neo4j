@@ -20,18 +20,34 @@ class GroupSpider(scrapy.Spider):
 
     def parse(self, response):
 
+        # We want to get the group name from the page with all the group names
         for group in response.css('.module-title::text').extract():
+
             yield {
-                'group': group,
+                'group': group
             }
 
-        #yield {
-            #'group' : response.css('.module-title::text').extract()
-            #'topics' : response.css('a::text').re('^#.*'),
-            #'name': response.css('.module-title::text').extract_first(),
-        #}
+            group_pages = response.xpath('//div/@data-href').extract()
+            print(group)
+            print(group_pages)
+'''
+            if group_pages is not None:
+                for group_page in group_pages:
+                    group_page = response.urljoin(group_page)
+                    print(group_page)
+                    yield scrapy.Request(group_page, callback=self.parse_group(group))
+'''
+'''
+    def parse_group(self, response, group):
 
-        #next_page = response.css('li.next a::attr(href)').extract_first()
-        #if next_page is not None:
-            #next_page = response.urljoin(next_page)
-            #yield scrapy.Request(next_page, callback=self.parse)
+        # For each group's page, we want info on their people, projects, and research fields
+        yield {
+            'group': group,
+            'people' : response.css(''),
+            'projects' : response.css(''),
+            'topics' : response.css('a::text').re('^#.*')
+        }
+'''
+
+
+
