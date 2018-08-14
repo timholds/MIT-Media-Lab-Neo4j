@@ -67,16 +67,33 @@ class GroupSpider(scrapy.Spider):
         active = response.meta['active']
         topics = response.meta['topics']
 
-        # Gets the names and links of all projects for this group
+        # Gets the names of all projects for this group
         project_names = response.css('.module-title::text').extract()
-        proj_link_end = response.xpath('//a/@href').extract()
-        projects = zip(project_names, proj_link_end)
+
+        # Get the project links for all projects for this group
+        proj_links_end_dirty = response.xpath('//a/@href').extract()
+        selector = 'projects/.+'
+
+        proj_links_end = []
+        for item in proj_links_end_dirty:
+            if re.search(selector, item) is not None:
+                print('Project link ending is ' + item)
+                proj_links_end.append(item)
+
+        assert len(proj_links_end) == len(project_names)
+
+        print(type(proj_links_end)) 
+        projects = zip(project_names, proj_links_end)
 
         # TODO turn all of these ^ into either CSS or xpath
 
         # Make the data for each of the projects
         for project in projects:
+            print('The proj_link end is ' + project[1])
             proj_link = 'https://www.media.mit.edu' + project[1]
+
+            print('The proj_link is ' + proj_link)
+            print('Calling parse_projects_second')
             yield scrapy.Request(proj_link, callback=self.parse_projects_second, meta={'group': response.meta['group'],
                                                                                      'active': active,
                                                                                      'topics': topics,

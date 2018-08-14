@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d96abffd-2d9f-4513-a5c2-0571e60bf6d7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/groups.csv" afterPath="$PROJECT_DIR$/groups.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mlneo/spiders/groups_spider.py" afterPath="$PROJECT_DIR$/mlneo/spiders/groups_spider.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,8 +43,8 @@
       <file leaf-file-name="groups_spider.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mlneo/spiders/groups_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="78" column="53" lean-forward="true" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="53" />
+            <state relative-caret-position="432">
+              <caret line="84" column="36" lean-forward="false" selection-start-line="84" selection-start-column="36" selection-end-line="84" selection-end-column="36" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -78,6 +76,8 @@
       <find>/groups</find>
       <find>'http</find>
       <find>http</find>
+      <find>*.</find>
+      <find>*</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -502,8 +502,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mlneo/spiders/groups_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="78" column="53" lean-forward="true" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="53" />
+        <state relative-caret-position="432">
+          <caret line="84" column="36" lean-forward="false" selection-start-line="84" selection-start-column="36" selection-end-line="84" selection-end-column="36" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
