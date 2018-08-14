@@ -1,6 +1,8 @@
 import scrapy
 import re
 
+# Plan - start urls for everything is the same but three different paths and three different spreadsheets
+
 class GroupSpider(scrapy.Spider):
     name = "groups"
 
@@ -120,11 +122,12 @@ class GroupSpider(scrapy.Spider):
         else:
             proj_active = True
 
+        pass
         # Get the research topics of this project
         proj_topics = response.css('a::text').re('^#.*')
 
         # Get links to every person who worked on this project
-        people_links = 
+        #people_links =
 
         #yield scrapy.Request(people_link, callback=self.parse_people, meta={'group': response.meta['group'],
                                                                                      #'active': active,
@@ -152,12 +155,21 @@ class GroupSpider(scrapy.Spider):
         topics = response.meta['topics']
         proj_name = response.meta['proj_name']
 
-        pass
+        people_links_end_dirty = response.xpath('//a/@href').extract()
+        selector = 'people/.+'
 
-        # Get links to all projects that are on the project page
-        #people_links = response.xpath('//a/@href').extract()
-        # print(type(people_links))
-        # people_links = response.xpath('//div/@data-href').extract()
+        people_links_end = []
+        for item in people_links_end_dirty:
+            if re.search(selector, item) is not None:
+                print('Project link ending is ' + item)
+                people_links_end.append(item)
+
+        for person in people_links_end:
+            person_link = 'https://www.media.mit.edu' + person
+            yield scrapy.Request(person_link, callback=self.parse_projects_second, meta={'group': response.meta['group'],
+                                                                                   'active': active,
+                                                                                   'topics': topics,
+                                                                                   'proj_name': proj_name})
 
     # Return group name, if the group is active, and the research topics
     def parse_group_old(self, response):
