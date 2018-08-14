@@ -24,43 +24,141 @@ class GroupSpider(scrapy.Spider):
         group_pages = response.xpath('//div/@data-href').extract()
 
         if group_pages is not None:
-
             selector = 'groups.*overview'
-
             for group_page in group_pages:
 
                 group_name_long = re.search(selector, group_page).group(0)
                 group_name = group_name_long[7:-9]
                 print('Group is ' + group_name)
 
-                group_page = response.urljoin(group_page)
+                group_link = response.urljoin(group_page)
                 print('The group page is' + str(group_page))
-                yield scrapy.Request(group_page, callback=self.parse_group, meta={'group': group_name})
+                yield scrapy.Request(group_link, callback=self.parse_group_projects, meta={'group': group_name})
 
 
-    def parse_group(self, response):
+    # Get group data and for each group call the parse_projects_first method
+    def parse_group_projects(self, response):
 
         # For each group's page, we want info on their status, people, projects, and research topics
+        group = response.meta['group']
 
         # Find if the words "was active" are here to see if the project is archived
-        archived_data = response.css('.variant-archived::text').extract()
-        print(str(archived_data))
-        selector = 'was\sactive'
+        group_archived = str(response.css('.variant-archived::text').extract())
+        was_active = re.search('was\sactive', group_archived)
+        if bool(was_active) is True:
+            active = False
+        else:
+            active = True
 
-        #people_links = response.xpath('//div/@data-href').extract()
-        #projects_links = response.xpath('//div/@data-href').extract()
+
+        # Find all topics
+        topics = response.css('a::text').re('^#.*')
+
+        projects_link = str('https://www.media.mit.edu/groups/' + response.meta['group']) + '/projects/'
+        yield scrapy.Request(projects_link, callback=self.parse_projects_first, meta={'group': response.meta['group'],
+                                                                                     'active': active,
+                                                                                     'topics': topics})
+
+    # Get the names and links for a group's projects and call the parse_projects_second method
+    def parse_projects_first(self, response):
+
+        # Variables which we want to pass to other methods
+        group = response.meta['group']
+        active = response.meta['active']
+        topics = response.meta['topics']
+
+        # Gets the names and links of all projects for this group
+        project_names = response.css('.module-title::text').extract()
+        proj_link_end = response.xpath('//a/@href').extract()
+        projects = zip(project_names, proj_link_end)
+
+        # TODO turn all of these ^ into either CSS or xpath
+
+        # Make the data for each of the projects
+        for project in projects:
+            proj_link = 'https://www.media.mit.edu' + project[1]
+            yield scrapy.Request(proj_link, callback=self.parse_projects_second, meta={'group': response.meta['group'],
+                                                                                     'active': active,
+                                                                                     'topics': topics,
+                                                                                     'proj_name': project[0]})
+
+    # Get data on each individual project and yield the results
+    def parse_projects_second(self, response):
+
+        # Get links to everyone who works for this group
+        # people_links = response.xpath('//div/@data-href').extract()
+
+        # Things we will want to put into the spreadsheet that were generated from other methods
+        group = response.meta['group']
+        group_active = response.meta['active']
+        group_topics = response.meta['topics']
+        proj_name = response.meta['proj_name']
+
+
+        # Find out of the project was archived - if the words "was
+        proj_archived = str(response.css('.variant-archived::text').extract())
+        inactive = re.search('was\sactive', proj_archived)
+        if bool(inactive) is True:
+            proj_active = False
+        else:
+            proj_active = True
+
+        # Get the research topics of this project
+        proj_topics = response.css('a::text').re('^#.*')
+
+
+        yield {
+            'group': group,
+            'group_active': group_active,
+            'proj' : proj_name,
+            'proj_active': proj_active,
+            'proj_topics': proj_topics,
+            'group_topics': group_topics,
+            # 'people' : people
+
+        }
+
+
+    # TODO write this method
+    def parse_group_people(self, response):
+        # Get links to everyone who works for this group
+        group = response.meta['group']
+        active = response.meta['active']
+        topics = response.meta['topics']
+
+        pass
+
+        # Get links to all projects that are on the project page
+        #people_links = response.xpath('//a/@href').extract()
+        # print(type(people_links))
+        # people_links = response.xpath('//div/@data-href').extract()
+
+    # Return group name, if the group is active, and the research topics
+    def parse_group_old(self, response):
+        # For each group's page, we want info on their status, people, projects, and research topics
+
+        # Get links to everyone who works for this group
+        # people_links = response.xpath('//div/@data-href').extract()
+        # Get links to all projects that are part of this group
+        # projects_links = response.xpath('//div/@data-href').extract()
+
+        # Find if the words "was active" are here to see if the project is archived
+        # Check if the project was archived
+        archived_data = response.css('.variant-archived::text').extract()
+        selector = 'was\sactive'
 
         if bool(re.search(selector, str(archived_data))) is True:
             active = False
         else:
             active = True
 
+        # Return the group (string), if the group is active (boolean), and the research topics (array)
         yield {
             'group': response.meta['group'],
-            #'people' : response.css(''),
-            #'projects' : response.css(''),
-            'active' : active,
-            'topics' : response.css('a::text').re('^#.*')
+            # 'people' : scrapy.Request(group_page, callback=self.parse_people)
+            # 'projects' : response.css(''),
+            'active': active,
+            'topics': response.css('a::text').re('^#.*'),
         }
 
 
