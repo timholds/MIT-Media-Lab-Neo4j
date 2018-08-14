@@ -82,7 +82,7 @@ class GroupSpider(scrapy.Spider):
 
         assert len(proj_links_end) == len(project_names)
 
-        print(type(proj_links_end)) 
+        print(type(proj_links_end))
         projects = zip(project_names, proj_links_end)
 
         # TODO turn all of these ^ into either CSS or xpath
@@ -123,6 +123,13 @@ class GroupSpider(scrapy.Spider):
         # Get the research topics of this project
         proj_topics = response.css('a::text').re('^#.*')
 
+        # Get links to every person who worked on this project
+        people_links = 
+
+        #yield scrapy.Request(people_link, callback=self.parse_people, meta={'group': response.meta['group'],
+                                                                                     #'active': active,
+                                                                                     #'topics': topics,
+                                                                                     #'proj_name': project[0]})
 
         yield {
             'group': group,
@@ -138,10 +145,12 @@ class GroupSpider(scrapy.Spider):
 
     # TODO write this method
     def parse_group_people(self, response):
+
         # Get links to everyone who works for this group
         group = response.meta['group']
         active = response.meta['active']
         topics = response.meta['topics']
+        proj_name = response.meta['proj_name']
 
         pass
 
