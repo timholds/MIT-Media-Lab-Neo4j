@@ -1,12 +1,12 @@
 import scrapy
 
 class ProjectsSpider(scrapy.Spider):
-    name = "project person"
+    name = "project_person"
 
     def start_requests(self):
         for i in range(0, 47):
             urls = [
-            'https://www.media.mit.edu/search/?page={}&filter=project'.format(i),
+            'http://www.media.mit.edu/search/?page={}&filter=project'.format(i),
             ]
 
             for url in urls:
@@ -17,14 +17,14 @@ class ProjectsSpider(scrapy.Spider):
     def parse(self, response):
 
         proj_titles = response.css('.module-title::text').extract()
-        # TODO figure out how to get links to each project's page
-        proj_links = response.css('').extract()
+        proj_links = response.xpath('//div/@data-href').extract()
 
         proj_people_links = []
 
         for item in proj_links:
-            link = item + 'people'
+            link = 'http://www.media.mit.edu{}people'.format(item[:-9])
             proj_people_links.append(link)
+            print('People links for {} is {}'.format(item, link))
 
         assert len(proj_titles) == len(proj_people_links)
 
@@ -34,16 +34,16 @@ class ProjectsSpider(scrapy.Spider):
             yield scrapy.Request(url=project[1], callback=self.parse_project, meta={'title': project[0]})
 
 
-    def parse_person(self, response):
+    def parse_project(self, response):
 
         proj_title = response.meta['title']
+        people = response.css('.module-title::text').extract()
+        positions = response.css('.module-subtitle::text').extract()
 
-        # TODO find out which people are working on project from its project page
-        people = response.css('').extract()
+        for person in people:
+            yield {
+                'project_title': proj_title,
+                'people' : person,
+                'positions': positions,
 
-
-        yield {
-            'project_title': proj_title,
-            'people': people,
-
-        }
+            }
