@@ -41,9 +41,11 @@ class ProjectsSpider(scrapy.Spider):
         positions = response.css('.module-subtitle::text').extract()
 
         for person in people:
+            index = 0
             yield {
                 'project_title': proj_title,
-                'people' : person,
-                'positions': positions,
+                'person' : person,
+                'position': positions[index],
 
             }
+            index += 1
