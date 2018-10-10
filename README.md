@@ -2,24 +2,38 @@
 This project scrapes all of the groups, projects and people from the MIT Media Lab and puts the data into a Neo4j Graph database.
 
 ## Prerequisites
-Python 3.6
-Scrapy 1.5.1
-Ipython 6.5
+Python 3.6,
+Scrapy 1.5.1,
 Neo4j-driver 1.6
 
 See requirements.txt for more details
 
 ## Getting started
-To create a local copy of this projects:
-0) If necessary, download neo4j make an instance on your machine at the default bolt://localhost:7687
-1) Edit the neo4j.conf file to disable authentication by changing dbms.security.auth_enabled=true to dbms.security.auth_enabled=false
-2) If you wish to use the data provided in this repo, scraped August 2018, run each of the functions in the import_data_to_neo4j.ipynb to put the data from the data folder into the database
+To create a local copy of this project:
 
-If you wish to get an updated dataset, run each of the following functions:
-scrapy crawl group_person -o group_person.csv
-scrapy crawl project_person -o proj_person.csv
-scrapy crawl group_projects -o group_proj.csv
-and then fun the functions in import_data_to_neo4j.ipynb
+0) If necessary, download Neo4j and make an instance on your machine at the default bolt://localhost:7687
+1) Run `git clone https://github.com/timholds/MIT-Media-Lab-Neo4j` to make a copy of this repo
+2) Update the Neo4j credentials in `import_data_to_neo4j.py` to work with your instance
+3) If you wish to use the data in this repo, scraped August 2018, copy the files from the data folder to the $NEO4J_HOME/import directory**, then 
+run import_data_to_neo4j.py to put the data into your neo4j instance. 
+
+** You can find out where your NEO4J_HOME is for an instance by going into Neo4j desktop, clicking on an instance, clicking manage, clicking terminal, and typing `pwd`. 
+
+If you wish to get an updated dataset, run each of the following functions: <br />
+`scrapy crawl group_person -o group_person.csv` <br />
+`scrapy crawl project_person -o proj_person.csv` <br />
+`scrapy crawl group_projects -o group_proj.csv` and then run <br /> 
+`import_data_to_neo4j.py`
+
+## Useful Queries
+To find the total number of people: <br />
+ `Match (p:Person) return count(p)` <br />
+Similarly, to find the total number of Projects and Groups: <br />
+`Match (p:Project) return count(p)` and <br />`Match (g:Group) return count(g)`
+
+To find a specific group, for example the Affective Computing group: <br />
+`Match (b:Group {name:"Affective Computing"}) return b`
+![Affective Computing](https://github.com/timholds/mit-media-lab-neo4j/screenshots/affective_computing.png")
 
 ## Tests
 I imagine I should add some tests at some point to make sure 1) the scraping is still working and 2) putting things into the database is still working.
