@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dfac40f9-f98d-417a-bdc5-2515809602cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/media-lab-neo.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/import_data_to_neo4j.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/import_data_to_neo4j.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/import_data_to_neo4j-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/pipelines.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/spiders/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/spiders/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/spiders/person_group_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/spiders/person_group_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/spiders/person_project_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/spiders/person_project_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mlneo/spiders/project_group_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/spiders/project_group_spider.py" afterDir="false" />
-    </list>
+    <list default="true" id="dfac40f9-f98d-417a-bdc5-2515809602cd" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +64,7 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="389">
-                <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+                <caret line="35" column="106" lean-forward="true" selection-start-line="35" selection-start-column="106" selection-end-line="35" selection-end-column="106" />
               </first_editor>
               <second_editor />
             </state>
@@ -243,7 +224,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="389">
-            <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+            <caret line="35" column="106" lean-forward="true" selection-start-line="35" selection-start-column="106" selection-end-line="35" selection-end-column="106" />
           </first_editor>
           <second_editor />
         </state>
