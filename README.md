@@ -33,7 +33,7 @@ Similarly, to find the total number of Projects and Groups: <br />
 
 To find a specific group, for example the Affective Computing group: <br />
 `Match (b:Group {name:"Affective Computing"}) return b`
-![Affective Computing](https://github.com/timholds/mit-media-lab-neo4j/screenshots/affective_computing.png)
+![Affective Computing](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/affective_computing.png)
 
 ## Tests
 I imagine I should add some tests at some point to make sure 1) the scraping is still working and 2) putting things into the database is still working.
