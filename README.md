@@ -26,6 +26,21 @@ If you wish to get an updated dataset, run each of the following functions: <br 
 `import_data_to_neo4j.py`
 
 ## Useful Queries
+All these examples use the Affective Computing Group, but you can replace this with any group you like. Please note that 
+groups, people, and projects are all case sensitive.
+
+To find a specific group: <br />
+`Match (b:Group {name:"Affective Computing"}) return b` <br />
+![Affective Computing](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/affective_computing.png)<br />
+
+To find all the projects of a specific group: <br />
+`Match (g:Group {name:"Affective Computing"})-[:HAS_PROJ]->(proj:Project) return g, proj` <br />
+![Affective Computing](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/affective_computing_projects.png)<br />
+
+To find all the people who work for a specific group: <br />
+`Match (g:Group {name:"Affective Computing"})<-[:WORKS_FOR]-(person:Person) return g, person` <br />
+![Affective Computing](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/affective_computing_people.png)<br />
+
 To find the total number of people: <br />
  `Match (p:Person) return count(p)` <br />
 ![Number People](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/number_people.png)<br />
@@ -34,10 +49,6 @@ Similarly, to find the total number of Projects and Groups: <br />
 ![Number Projects](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/number_projects.png)<br />
 `Match (g:Group) return count(g)`  <br />
 ![Number Groups](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/number_groups.png) <br />
-
-To find a specific group, for example the Affective Computing group: <br />
-`Match (b:Group {name:"Affective Computing"}) return b`
-![Affective Computing](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/affective_computing.png)<br />
 
 ## Tests
 I imagine I should add some tests at some point to make sure 1) the scraping is still working and 2) putting things into the database is still working.
