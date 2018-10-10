@@ -30,8 +30,9 @@ To find the total number of people: <br />
  `Match (p:Person) return count(p)` <br />
 ![Number People](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/number_people.png)<br />
 Similarly, to find the total number of Projects and Groups: <br />
-`Match (p:Project) return count(p)` and <br />`Match (g:Group) return count(g)`
+`Match (p:Project) return count(p)` and <br />
 ![Number Projects](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/number_projects.png)<br />
+`Match (g:Group) return count(g)` < br />
 ![Number Groups](https://github.com/timholds/MIT-Media-Lab-Neo4j/blob/master/Screenshots/number_groups.png)<br />
 
 To find a specific group, for example the Affective Computing group: <br />
